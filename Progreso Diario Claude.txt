@@ -36,3 +36,51 @@ else:
 ```
 
 **Día 3:** vamos a ver **bucles** (`for` y `while`), que le permiten a Python repetir código varias veces, por ejemplo para que el "portero" siga preguntando hasta que le den una respuesta válida, en vez de cortarse después de un solo intento.
+
+Aprendimos: bucles for (repetición de cantidad exacta, con range() y la variable de control i) y while (repetición hasta que se cumpla una condición); la diferencia clave entre ambos con la analogía de las dos vacas (moldes fijos vs. "hasta que caiga la noche"); el operador != (distinto de); cómo combinar != con and/or correctamente (identificando el error clásico de usar or cuando la lógica pedía and); el patrón de "guardar el resultado del input() de vuelta en la misma variable" para que un while pueda detectar cambios; banderas booleanas (variable = False / True) como alternativa más prolija a comparar contra números; break para cortar un bucle a la fuerza; y a identificar cuándo un while o un if sobra porque nunca llega a repetirse de verdad.
+
+Código final del reto del gimnasio (versión con registro de usuario y banderas):
+
+python
+mensualprecio = 15000
+trimestralprecio = 40000
+anualprecio = 140000
+nombre = input("Introduzca su nombre de usuario. \n")
+contraseñauser = input("\nIntroduzca una contraseña.\n")
+contraseñaconfirm = input("\nConfirme su contraseña.\n")
+intentos = 0
+while contraseñauser != contraseñaconfirm and intentos < 3:
+    print("\nLas contraseñas no coinciden. Intente de nuevo\n")
+    contraseñauser = input("Introduzca una contraseña.\n")
+    contraseñaconfirm = input("\nConfirme su contraseña.\n")
+    intentos = intentos + 1
+if contraseñauser != contraseñaconfirm and intentos == 3:
+    print("Demasiados intentos fallidos. Cerrando acceso.")
+else:
+    print("\nSeleccione su tipo de plan:")
+    planes = ("\nMensual", "\nTrimestral", "\nAnual")
+    for plan in planes:
+        print(plan)
+    planusuario = input("\n").lower()
+    while planusuario not in ("mensual", "trimestral", "anual"):
+        planusuario = input("\nIngrese un dato válido.\n").lower()
+    if planusuario == "mensual":
+        edadvalida = False
+        while edadvalida == False:
+            try:
+                edad = int(input("\nIngrese su edad: "))
+                edadvalida = True
+            except:
+                print("Ingrese un dato válido.")
+        if edad < 18:
+            print("\nNecesitas autorización de un mayor de edad para acceder.\n")
+        elif edad >= 18 and edad < 60:
+            print("\nEl precio del plan mensual es de " + str(mensualprecio) + " pesos.")
+        elif edad >= 60:
+            preciofinal = int(mensualprecio*0.8)
+            print("\nEl precio del plan mensual es de " + str(preciofinal) + " pesos (Descuento Senior aplicado).")
+    # (mismo patrón se repite para "trimestral" y "anual")
+
+Extra: se armó una interfaz gráfica con tkinter sobre esta misma lógica (solo estético, no forma parte del temario aún), y se corrigió un bug de emojis no compatibles con Pydroid.
+
+Día 4: listas ([]), y herramientas relacionadas (len, append, recorrerlas con for) — con la idea de aplicarlas a un mini ejemplo con los personajes Remielle, Eiden y Eldreda.
